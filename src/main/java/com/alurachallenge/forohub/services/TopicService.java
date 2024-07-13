@@ -5,6 +5,9 @@ import com.alurachallenge.forohub.repositories.TopicRepository;
 import com.alurachallenge.forohub.utils.customExceptions.AlreadyExistsException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class TopicService {
 
@@ -30,4 +33,15 @@ public class TopicService {
         return topicRepository.save(topic);
     }
 
+    public Optional<Topic> findById(Long id) {
+        return topicRepository.findById(id);
+    }
+
+    public List<Topic> findAll() {
+        return topicRepository.findAll();
+    }
+
+    public void deleteTopic(Long id) {
+        topicRepository.deleteById(id);
+    }
 }

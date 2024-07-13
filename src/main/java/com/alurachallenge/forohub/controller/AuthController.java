@@ -2,6 +2,7 @@ package com.alurachallenge.forohub.controller;
 
 import com.alurachallenge.forohub.dto.AuthLoginRequest;
 import com.alurachallenge.forohub.dto.RegisterDTO;
+import com.alurachallenge.forohub.dto.UserDTO;
 import com.alurachallenge.forohub.models.Role;
 import com.alurachallenge.forohub.models.User;
 import com.alurachallenge.forohub.services.RoleService;
@@ -43,13 +44,13 @@ public class AuthController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody @Valid RegisterDTO register) {
+    public ResponseEntity<UserDTO> register(@RequestBody @Valid RegisterDTO register) {
 
         Role rol = roleService.findByName(register.roleName()).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found"));
         User user = new User(register);
         user.setRol(rol);
         try {
-           return ResponseEntity.ok(userService.registerUser(user));
+           return ResponseEntity.ok(new UserDTO(userService.registerUser(user)));
         } catch (AlreadyExistsException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }

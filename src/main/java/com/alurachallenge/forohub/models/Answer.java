@@ -22,7 +22,7 @@ public class Answer {
         @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
         private Long id;
 
-        @ManyToOne
+        @ManyToOne(cascade=CascadeType.REMOVE)
         private Topic topic;
         private String message;
         private Boolean solution = false;

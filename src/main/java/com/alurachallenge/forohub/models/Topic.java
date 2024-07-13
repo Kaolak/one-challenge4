@@ -1,6 +1,7 @@
 package com.alurachallenge.forohub.models;
 
 
+import com.alurachallenge.forohub.dto.NewTopicDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,4 +34,8 @@ public class Topic {
     @CreationTimestamp
     private LocalDateTime creationDate = LocalDateTime.now();
 
+    public Topic(NewTopicDTO newTopicDTO) {
+        this.title = newTopicDTO.title();
+        this.message = newTopicDTO.message();
+    }
 }

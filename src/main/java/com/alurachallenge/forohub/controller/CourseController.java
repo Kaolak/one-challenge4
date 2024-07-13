@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/courses")
@@ -23,9 +26,11 @@ public class CourseController {
     }
 
     @PostMapping
-    public ResponseEntity<Course> createCourse(@RequestBody @Valid NewCourseDTO courseDTO) {
+    public ResponseEntity<Course> createCourse(@RequestBody @Valid NewCourseDTO courseDTO, UriComponentsBuilder uriComponentsBuilder) {
         try {
-            return ResponseEntity.ok(courseService.createCourse(new Course(courseDTO)));
+            Course newCourse = courseService.createCourse(new Course(courseDTO));
+            URI url=uriComponentsBuilder.path("/courses/{id}").buildAndExpand(newCourse.getId()).toUri();
+            return ResponseEntity.created(url).body(newCourse);
         }catch (AlreadyExistsException e){
             throw new ResponseStatusException(org.springframework.http.HttpStatus.CONFLICT, e.getMessage());
         }
