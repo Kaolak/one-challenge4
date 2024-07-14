@@ -35,7 +35,7 @@ public class SecurityConfig {
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(http -> {
-                    http.requestMatchers(HttpMethod.POST, "/login", "/register", "/roles").permitAll();
+                    http.requestMatchers(HttpMethod.POST, "/login", "/register", "/roles", "/error").permitAll();
                     http.anyRequest().authenticated();
                 }).addFilterBefore(jwtTokenValidator, BasicAuthenticationFilter.class)
                 .exceptionHandling(e -> e.authenticationEntryPoint(new CustomAuthenticationEntryPoint()))

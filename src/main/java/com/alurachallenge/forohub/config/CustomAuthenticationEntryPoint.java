@@ -14,10 +14,14 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
+        if (authException != null) {
+            System.out.println(authException.getMessage());
+
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
         // Set a custom header
         response.setHeader("WWW-Authenticate", "Bearer realm=\"Access to the staging site\", charset=\"UTF-8\"");
         response.getWriter().write("{\"error\": \"Unauthorized access. Please login.\"}");
+        }
     }
 }

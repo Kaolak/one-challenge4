@@ -1,6 +1,7 @@
 package com.alurachallenge.forohub.models;
 
 
+import com.alurachallenge.forohub.dto.NewAnswerDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class Answer {
         @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
         private Long id;
 
-        @ManyToOne(cascade=CascadeType.REMOVE)
+        @ManyToOne
         private Topic topic;
         private String message;
         private Boolean solution = false;
@@ -30,4 +31,5 @@ public class Answer {
         private User author;
         @CreationTimestamp
         private LocalDateTime creationDate = LocalDateTime.now();
+
     }
